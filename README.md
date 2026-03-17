@@ -69,9 +69,11 @@ sequenceDiagram
 - **Value Objects**: Uso de tipos fortes para conceitos de negócio como `Money`, evitando "Primitive Obsession".
 
 ## Resultados do Teste de Stress (k6)
-O teste de capacidade máxima foi executado com o script `tests/max-capacity-test.js`, que simula uma rampa de carga progressiva partindo de 50 req/s até 500 req/s, ou seja, a solução atendeu **10x o requisito do desafio** com **0% de perda**.
+O teste de capacidade máxima foi executado com o script `tests/max-capacity-test.js`, que simula uma rampa de carga progressiva partindo de 50 req/s até 500 req/s, ou seja, a solução atendeu **5x o requisito do desafio** com **0% de perda** (com todas as limitações 
 
 ![Resultado k6](resultado-k6.jpg)
+
+**Nota sobre o ambiente de execução:** O teste foi realizado em ambiente local com Docker Desktop (WSL), que por padrão limita os recursos disponíveis para os containers via WSL2 (CPU, memória e I/O). O resultado de ~247 req/s reflete esse teto de ambiente, não o teto da aplicação. Em um ambiente com recursos dedicados o throughput real seria significativamente maior.
 
 ## Como Executar
 
