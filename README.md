@@ -60,7 +60,6 @@ sequenceDiagram
     DB2->>DB2: Marca Mensagem como Processada no Inbox
     CONS-->>DB2: Commit Transação
 ```
-
 ## Padrões e Práticas Aplicadas
 
 - **Outbox Pattern**: Garante a consistência atômica entre a persistência do banco de dados e a publicação de mensagens no RabbitMQ.
@@ -68,6 +67,11 @@ sequenceDiagram
 - **Resiliência (Polly)**: Configurações de **Retry** e **Circuit Breaker** no pipeline do MassTransit para lidar com falhas transitórias.
 - **Observabilidade (OpenTelemetry)**: Rastreamento distribuído e métricas integradas para monitoramento de performance e erros.
 - **Value Objects**: Uso de tipos fortes para conceitos de negócio como `Money`, evitando "Primitive Obsession".
+
+## Resultados do Teste de Stress (k6)
+O teste de capacidade máxima foi executado com o script `tests/max-capacity-test.js`, que simula uma rampa de carga progressiva partindo de 50 req/s até 500 req/s, ou seja, a solução atendeu **10x o requisito do desafio** com **0% de perda**.
+
+![Resultado k6](resultado-k6.jpg)
 
 ## Como Executar
 
