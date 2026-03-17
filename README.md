@@ -111,3 +111,101 @@ Para detalhes sobre as decisões técnicas tomadas, consulte a pasta [docs/adr](
 Este projeto utiliza as bibliotecas MediatR e MassTransit (apenas v9+) em versões que possuem licenciamento comercial.
 A escolha foi intencional, considerando produtividade, clareza arquitetural e adoção de boas práticas amplamente utilizadas no mercado (como CQRS, mensageria e desacoplamento de componentes).
 Em um cenário real de produção, a adoção dessas bibliotecas seria avaliada considerando custo, contexto do projeto e alternativas, quando aplicável.
+
+## Stack Tecnológica
+
+### Plataforma e Linguagem
+
+| Tecnologia | Versão | Uso |
+|---|---|---|
+| .NET | 10.0 | Plataforma de runtime para todos os serviços |
+| C# | 13 (latest) | Linguagem principal |
+| ASP.NET Core | 10.0 | Framework web para as APIs REST |
+
+---
+
+### Serviços de Infraestrutura
+
+| Serviço | Versão (imagem) | Uso |
+|---|---|---|
+| PostgreSQL | 16-alpine | Banco de dados principal (instância separada por microsserviço) |
+| RabbitMQ | 3-management-alpine | Message broker para comunicação assíncrona entre serviços |
+
+---
+
+### Bibliotecas
+
+#### Mensageria e Resiliência
+
+| Pacote | Versão | Uso |
+|---|---|---|
+| `MassTransit` | 8.5.8 | Abstração de mensageria sobre o RabbitMQ |
+| `MassTransit.RabbitMQ` | 8.5.8 | Transport do MassTransit para o RabbitMQ |
+| `MassTransit.EntityFrameworkCore` | 8.5.8 | Suporte ao Outbox/Inbox Pattern via EF Core (persistência transacional de mensagens) |
+
+#### Persistência
+
+| Pacote | Versão | Uso |
+|---|---|---|
+| `Microsoft.EntityFrameworkCore` | 10.0.5 | ORM principal |
+| `Npgsql.EntityFrameworkCore.PostgreSQL` | 10.0.1 | Driver do PostgreSQL para o EF |
+
+#### Aplicação
+
+| Pacote | Versão | Uso |
+|---|---|---|
+| `MediatR` | 14.1.0 | Implementação do padrão CQRS via Mediator (Commands, Queries, Handlers) |
+| `FluentValidation` | 12.1.1 | Validação de Commands e Queries |
+| `FluentValidation.DependencyInjectionExtensions` | 12.1.1 | Registro automático de validadores do FluentValidation |
+
+#### Observabilidade
+
+| Pacote | Versão | Uso |
+|---|---|---|
+| `OpenTelemetry.Extensions.Hosting` | 1.15.0 | Integração do OpenTelemetry com o host do ASP.NET Core |
+| `OpenTelemetry.Instrumentation.AspNetCore` | 1.15.1 | Rastreamento automático de requisições HTTP recebidas |
+| `OpenTelemetry.Instrumentation.Http` | 1.15.0 | Rastreamento automático de chamadas HTTP de saída |
+| `OpenTelemetry.Instrumentation.Runtime` | 1.15.0 | Métricas de runtime do .NET (GC, threads, memória e etc) |
+| `OpenTelemetry.Exporter.Console` | 1.15.0 | Exportação de traces e métricas para o console |
+| `Npgsql.OpenTelemetry` | 10.0.2 | Instrumentação de queries ao PostgreSQL via OpenTelemetry |
+| `Serilog.AspNetCore` | 10.0.0 | Logging estruturado com integração nativa ao ASP.NET Core |
+
+#### API
+
+| Pacote | Versão | Uso |
+|---|---|---|
+| `Swashbuckle.AspNetCore` | 10.1.5 | Geração de documentação OpenAPI (Swagger UI) |
+| `AspNetCore.HealthChecks.NpgSql` | 9.0.0 | Health check do PostgreSQL via endpoint `/health` |
+| `AspNetCore.HealthChecks.Rabbitmq` | 9.0.0 | Health check do RabbitMQ via endpoint `/health` |
+
+---
+
+### Bibliotecas de Testes
+
+| Pacote | Versão | Uso |
+|---|---|---|
+| `xunit.v3.mtp-v2` | 3.2.2 | Framework de testes unitários (xUnit v3) |
+| `NSubstitute` | 5.3.0 | Framework de mocking para isolamento de dependências |
+| `FluentAssertions` | 8.9.0 | Assertions legíveis e expressivas nos testes |
+| `Microsoft.Testing.Extensions.CodeCoverage` | 18.5.2 | Coleta de cobertura de código |
+
+---
+
+### Ferramentas de Teste de Carga
+
+| Ferramenta | Uso |
+|---|---|
+| `k6` | Teste de stress e capacidade máxima da API de Lançamentos |
+
+Dois scripts disponíveis em `tests/`:
+- **`stress-test.js`** - valida o requisito de 50 req/s com no máximo 5% de falha e p95 < 500ms
+- **`max-capacity-test.js`** - sonda o limite máximo do sistema com rampa de carga progressiva (50 → 100 → 250 → 500 req/s)
+
+---
+
+### Infraestrutura
+
+| Tecnologia | Uso |
+|---|---|
+| Docker | Containerização de todos os serviços |
+| Docker Compose | Orquestração local completa (infra + aplicações) |
