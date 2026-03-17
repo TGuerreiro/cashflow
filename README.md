@@ -1,4 +1,4 @@
-# CashFlow Solution - Teste Arquiteto de Software Sênior VERX
+# CashFlow Solution
 
 Este projeto é uma solução completa para o desafio de controle de fluxo de caixa, desenvolvida com foco em **escalabilidade**, **resiliência** e **observabilidade**. A arquitetura foi desenhada para suportar alta carga (50 req/s) mantendo a integridade dos dados através de padrões de mensageria e consistência eventual.
 
@@ -69,7 +69,7 @@ sequenceDiagram
 - **Value Objects**: Uso de tipos fortes para conceitos de negócio como `Money`, evitando "Primitive Obsession".
 
 ## Resultados do Teste de Stress (k6)
-O teste de capacidade máxima foi executado com o script `tests/max-capacity-test.js`, que simula uma rampa de carga progressiva partindo de 50 req/s até 500 req/s, ou seja, a solução atendeu **5x o requisito do desafio** com **0% de perda** (com todas as limitações 
+O teste de capacidade máxima foi executado com o script `tests/max-capacity-test.js`, que simula uma rampa de carga progressiva partindo de 50 req/s até 500 req/s, ou seja, a solução atendeu **5x o requisito do desafio** com **0% de perda**.
 
 ![Resultado k6](resultado-k6.jpg)
 
@@ -95,11 +95,12 @@ Para validar o requisito de **50 requisições por segundo com no máximo 5% de 
 
 ### Como Rodar no Windows:
 1. Instale o k6 via Chocolatey: `choco install k6` ou baixe o instalador em [k6.io](https://grafana.com/docs/k6/latest/set-up/install-k6/).
-2. Na pasta do projeto, execute o script que fornecemos:
+2. Na pasta do projeto, execute o script:
    ```bash
    k6 run tests/stress-test.js
    ```
 O script simula 50 usuários simultâneos fazendo lançamentos constantes por 1 minuto e falhará automaticamente se a taxa de erro for superior a 5% ou a latência (p95) for superior a 500ms.
+
 Também foi incluído um teste de carga para identificar a capacidade máxima do seu hardware:
    ```bash
    k6 run tests/max-capacity-test.js
@@ -124,7 +125,7 @@ Em um cenário real de produção, a adoção dessas bibliotecas seria avaliada 
 
 | Tecnologia | Versão | Uso |
 |---|---|---|
-| .NET | 10.0 | Plataforma de runtime para todos os serviços |
+| .NET | 10.0.201 | Plataforma de runtime para todos os serviços |
 | C# | 13 (latest) | Linguagem principal |
 | ASP.NET Core | 10.0 | Framework web para as APIs REST |
 
@@ -205,7 +206,7 @@ Em um cenário real de produção, a adoção dessas bibliotecas seria avaliada 
 
 Dois scripts disponíveis em `tests/`:
 - **`stress-test.js`** - valida o requisito de 50 req/s com no máximo 5% de falha e p95 < 500ms
-- **`max-capacity-test.js`** - sonda o limite máximo do sistema com rampa de carga progressiva (50 → 100 → 250 → 500 req/s)
+- **`max-capacity-test.js`** - Testa o limite máximo do sistema com rampa de carga progressiva (50 > 100 > 250 > 500 req/s)
 
 ---
 
