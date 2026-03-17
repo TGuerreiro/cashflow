@@ -1,4 +1,4 @@
-# CashFlow Solution - Arquiteto de Software Sênior
+# CashFlow Solution - Teste Arquiteto de Software Sênior VERX
 
 Este projeto é uma solução completa para o desafio de controle de fluxo de caixa, desenvolvida com foco em **escalabilidade**, **resiliência** e **observabilidade**. A arquitetura foi desenhada para suportar alta carga (50 req/s) mantendo a integridade dos dados através de padrões de mensageria e consistência eventual.
 
