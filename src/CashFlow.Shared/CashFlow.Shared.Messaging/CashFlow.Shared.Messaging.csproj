@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>CashFlow.Shared.Messaging</RootNamespace>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../CashFlow.Shared.Domain/CashFlow.Shared.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,57 @@
+services:
+
+  postgres-lancamentos:
+    image: postgres:16-alpine
+    container_name: cashflow-postgres-lancamentos
+    environment:
+      POSTGRES_DB: cashflow_lancamentos
+      POSTGRES_USER: cashflow
+      POSTGRES_PASSWORD: cashflow123
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata-lancamentos:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cashflow -d cashflow_lancamentos"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  postgres-consolidado:
+    image: postgres:16-alpine
+    container_name: cashflow-postgres-consolidado
+    environment:
+      POSTGRES_DB: cashflow_consolidado
+      POSTGRES_USER: cashflow
+      POSTGRES_PASSWORD: cashflow123
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata-consolidado:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cashflow -d cashflow_consolidado"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: cashflow-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  pgdata-lancamentos:
+  pgdata-consolidado:
+  rabbitmq-data:

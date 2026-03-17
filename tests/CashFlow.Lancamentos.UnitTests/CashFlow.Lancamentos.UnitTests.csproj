@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>CashFlow.Lancamentos.UnitTests</RootNamespace>
+    <TargetFramework>net10.0</TargetFramework>
+    <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="8.9.0" />
+    <PackageReference Include="NSubstitute" Version="5.3.0" />
+    <PackageReference Include="xunit.v3.mtp-v2" Version="3.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\CashFlow.Lancamentos\CashFlow.Lancamentos.Application\CashFlow.Lancamentos.Application.csproj" />
+    <ProjectReference Include="..\..\src\CashFlow.Lancamentos\CashFlow.Lancamentos.Domain\CashFlow.Lancamentos.Domain.csproj" />
+    <ProjectReference Include="..\..\src\CashFlow.Shared\CashFlow.Shared.Domain\CashFlow.Shared.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
