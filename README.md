@@ -94,7 +94,7 @@ O teste de capacidade máxima foi executado com o script `tests/max-capacity-tes
 Para validar o requisito de **50 requisições por segundo com no máximo 5% de perda**, recomendo o uso da ferramenta **k6** (Gratuita).
 
 ### Como Rodar no Windows:
-1. Instale o k6 via Chocolatey: `choco install k6` ou baixe o instalador em [k6.io]([https://k6.io](https://grafana.com/docs/k6/latest/set-up/install-k6/?pg=get&plcmt=selfmanaged-box10-cta1)).
+1. Instale o k6 via Chocolatey: `choco install k6` ou baixe o instalador em [k6.io](https://grafana.com/docs/k6/latest/set-up/install-k6/).
 2. Na pasta do projeto, execute o script que fornecemos:
    ```bash
    k6 run tests/stress-test.js
